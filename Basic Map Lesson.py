@@ -8,7 +8,7 @@
 
 Map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, -2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
     [1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
@@ -16,18 +16,19 @@ Map = [
     [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1],
     [1, 0, 1, 0, 1, 1, -1, -1, -1, -1, 1, 1],
     [1, 0, 0, 0, 0, 0, -1, -1, -1, -1, 1, 1],
-    [1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1],
-    [1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1],
+    [1, 0, 1, 0, 0, 1, -1, 1, 1, 1, -1, -3],
+    [1, 0, 1, 0, 1, 1, -1, -1, -1, -1, -1, 1],
+    [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
 #0=space where you can move
 #-1=minefield
+#-2=minefield toggle
 #make it so that -1 is a minefield, so, it is solid and you can
 #only pass through two mines before you die (restart)
 #you have to find the switch to deactivate the minefield to pass to the next obstacle
@@ -35,7 +36,7 @@ Map = [
 #Define a function to print our Map and current Player location
 
 def drawMap(currX, currY):
-    print ("map size is : ", len(Map), " rows by ", len(Map[0]), " columns")
+    #print ("map size is : ", len(Map), " rows by ", len(Map[0]), " columns")
     print()
     for y in range(0, len(Map)):
         for x in range(0, len(Map[y])):
@@ -44,17 +45,24 @@ def drawMap(currX, currY):
             else:
                 if Map[y][x] == 0:
                     print("  ", end="")
-                if Map[y][x] == -2:
-                    
+                elif Map[y][x] == 1:
+                    print("▧", end=" ")
+                elif Map[y][x] == -2:
+                    print("?", end=" ")
                 elif Map[y][x] == -1:
                     print("x", end=" ")
+                elif Map[y][x] == -3:
+                    print("𓉞", end=" ")
+                
                 else:
                     print(Map[y][x], "", end="")
         print()
     print()
     
-
-fc#Define our function that will move the player
+def welcomeMsg():
+    name=input("Hello, Traveler. Please enter your name: ")
+    print("Hello, ", name, "\n Beware. this dungeon has mines in it, but dont fret, \n a mine deactivator is somewhere here \n find all 5 numbers around the map to deactivate the mines and win.")
+#Define our function that will move the player
 #The function will first check if the player can move or hits a wall
 #If the player can move, then the current location will be updated
 #If the player cannot move due to a wall, the location will not be updated
@@ -96,11 +104,13 @@ currX = 1
 currY = 4
 
 #draw the map the first time before asking for a move
+welcomeMsg()
 drawMap(currX, currY)
-
 #Forever just let the player move around the map on the path
+
 while True:
     moveDir = input("Enter direction (u,d,l,r): ")
     currX, currY = movePlayer(currX, currY, moveDir)
     drawMap(currX, currY)
+
     
