@@ -45,17 +45,20 @@ def drawMap(currX, currY):
             else:
                 if Map[y][x] == 0:
                     print("  ", end="")
-                elif Map[y][x] == 1:
-                    print("▧", end=" ")
-                elif Map[y][x] == -2:
-                    print("?", end=" ")
-                elif Map[y][x] == -1:
-                    print("x", end=" ")
-                elif Map[y][x] == -3:
-                    print("𓉞", end=" ")
-                
+                if (currX == 1) and (currY == 1) and MineStatus==True:
+                    terminal()
                 else:
-                    print(Map[y][x], "", end="")
+                    elif Map[y][x] == 1:
+                        print("▧", end=" ")
+                    elif Map[y][x] == -2:
+                        print("?", end=" ")
+                    elif Map[y][x] == -1:
+                        print("x", end=" ")
+                    elif Map[y][x] == -3:
+                        print("𓉞", end=" ")
+                
+                    else:
+                        print(Map[y][x], "", end="")
         print()
     print()
     
@@ -72,31 +75,46 @@ def movePlayer(x,y,moveDir):
     badMove = True
 
     #Now check if the move is valid - brute force method - better ways exist
-    if moveDir == "u":
-        if Map[y-1][x] <= 0 :
+    #doing an experiment with moveplayer function. Added a specific condition where you can move through minefield if it is turned off, 
+    
+    if moveDir == "w":
+        if Map[y-1][x] <= 0 or Map[y][x+1] == 5:
             #print ("valid up move")
             return (x, y-1)
 
-    if moveDir == "d":
-        if Map[y+1][x] <= 0:
+    if moveDir == "s":
+        if Map[y+1][x] <= 0 or Map[y][x+1] == 5:
             #print ("valid down move")
             return (x, y+1)
 
-    if moveDir == "l":
-        if Map[y][x-1] <= 0:
+    if moveDir == "a":
+        if Map[y][x-1] <= 0 or Map[y][x+1] == 5:
             #print ("valid left move")
             return (x-1, y)
 
-    if moveDir == "r":
-        if Map[y][x+1] <= 0:
+    if moveDir == "d":
+        if Map[y][x+1] <= 0 or Map[y][x+1] == 5:
             #print ("valid right move")
             return (x+1, y)
-        
+            
     #they attempted a bad move
     if badMove:
         print ("**Invalid move** Try again.")
         return (x,y)   #return the same location they are in since no move
 
+#made a terminal that is a question mark on the map; when player steps up to terminal he gets prompted to disable mines
+#however, still unknown how to do list operation to change values to make mines pass-through
+def terminal():
+    MineStatus=True
+    code=int(input("TERMINAL3847: greetings, AGENT. Please enter 5-digit access code: "))
+    if code==("34873"): #make random num for code
+        MinePrompt=input("disable mines? (y/n)")
+        if MinePrompt=="y":
+            MineStatus=False
+    else:
+        print ("Invalid Code!")
+    return MineStatus
+    
 
 
 #Set our starting location
