@@ -107,13 +107,23 @@ def movePlayer(x,y,moveDir):
 def terminal():
     MineStatus=True
     code=int(input("TERMINAL3847: greetings, AGENT. Please enter 5-digit access code: "))
-    if code==("34873"): #make random num for code
+    if code==(num1, num2, num3, num4, num5): #make random num for code
         MinePrompt=input("disable mines? (y/n)")
         if MinePrompt=="y":
             MineStatus=False
     else:
         print ("Invalid Code!")
     return MineStatus
+#making a mechanic for the terminal code, so that it is completely random for higher replayability
+def DungeonCode(num1, num2, num3, num4, num5):
+    num1=random.randint(0,9)
+    num2=random.randint(0,9)
+    num3=random.randint(0,9)
+    num4=random.randint(0,9)
+    num5=random.randint(0,9)
+    #print ("dungeon code is", num1, num2, num3, num4, num5)
+    return num1, num2, num3, num4, num5
+#Set our starting location
     
 
 
