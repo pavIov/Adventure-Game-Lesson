@@ -11,7 +11,7 @@ M=2
 SECRET=-4
 NUMBER=-9
 KEYCARD=-20
-DOOR=-3
+DOOR=-44
 TERMINAL=-2
 POTATO=-69
 CurrCount=1
@@ -28,7 +28,7 @@ Map = [
     [1, 0, 1, 0, 1, 1, M, M, M, M, 1, 1],
     [1, 0, 0, 0, 0, 0, M, M, M, M, 1, 1],
     [1, 0, 1, 1, 1, 1, M, M, M, M, M, 1],
-    [1, -69, 1, 0, -9, 1, M, 1, 1,M, M, -3],
+    [1, -69, 1, 0, -9, 1, M, 1, 1, M, -44, 1],
     [1, 0, 1, 0, 1, 1, M, M, M, M, M, 1],
     [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 1, 1, 0, 1, 1, -20, 0, 0, -9, 1],
@@ -86,7 +86,8 @@ def drawMap(currX, currY):
                         CurrCount+=1
 
                         
-                
+            if MineStatus==False:
+                DisMines()      
             if Map[y][x]==KEYCARD and currX== x and currY == y and len(keys)==0:
                 print ("You picked up a keycard.")
                 keys.append("Keycard") #keycards
@@ -97,16 +98,14 @@ def drawMap(currX, currY):
                 if eat_potato.lower() == 'y':
                     print("You eat the potato...")
                     invert_directions(currX, currY)
-            if Map[y][x]==DOOR and currX== x and currY == y and len(keys)==1:
+            if Map[y][x]==DOOR and currX== x and currY == y: #and len(keys)==1:
                 win()
             #while (currX == 1) and (currY == 1) and MineStatus==True and Interaction:
                #terminal()
             #if (currX == 16) and (currY == 9) and MineStatus==False:
                 #win()
+                
             else:
-                if MineStatus == False and (Map[y][x] == M):
-                    print(" ", end="")
-                else:
                     if Map[y][x] == 0:
                         print("  ", end="")
                     elif Map[y][x] == WALL:
@@ -118,7 +117,7 @@ def drawMap(currX, currY):
                     elif Map[y][x] == 2:
                         print("x", end=" ")
                     elif Map[y][x] == -1:
-                        print(" ", end=" ")
+                        print("  ", end="")
                     elif Map[y][x] == DOOR:
                         print("𓉞", end=" ")
                     elif Map[y][x] == KEYCARD:
@@ -128,7 +127,12 @@ def drawMap(currX, currY):
         print()
     print()
 
-
+def DisMines():
+    global Map
+    for y in range(0, len(Map)):
+        for x in range(0, len(Map[y])):
+            if Map[y][x]==2:
+                Map[y][x]=-1
 def invert_directions(currX, currY):  # Added an invert directions function for when player eats the poisonous potato
     global inverted_turns  
     inverted_turns = 4  
