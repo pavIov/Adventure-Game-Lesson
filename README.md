@@ -1,5 +1,12 @@
-#Welcome to Dungeon Digit
-> Dungeon Digit A small game I made in Python Turtle for programming class
+# Welcome to Dungeon Digit
+> A small game I made in Python Turtle for programming class
+
+## HOW TO RUN
+
+* Make sure you have the Turtle module installed in Python
+* Copy/download the code from MainGame.py
+* You're all set
+> If you have the Turtle module installed (which comes pre-installed with IDLE), it should be that simple. If you have any issues running the code, let me know
 
 ## INSTRUCTIONS 
 
