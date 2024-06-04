@@ -59,10 +59,10 @@ screen.setup(width=800, height=600)
 square_size = 20
 
 # Making a player turtle
-player = turtle.Turtle()  # Create the player turtle
-player.shape("turtle")  # Set the player shape
-player.color("orange")  # Set the player color
-player.penup() 
+#player = turtle.Turtle()  # Create the player turtle
+#player.shape("turtle")  # Set the player shape
+#player.color("orange")  # Set the player color
+#player.penup() 
 
 # Initialize the drawing turtle for the map
 drawer = turtle.Turtle()  # Create a turtle for drawing the map
@@ -76,11 +76,11 @@ def drawMap(currX, currY):
     global CurrCount, keys, inverted_turns, M
     NumFound=False
     #print ("map size is : ", len(Map), " rows by ", len(Map[0]), " columns")
-    print()
+    #print()
     for y in range(0, len(Map)):
         for x in range(0, len(Map[y])):
-            if (currX == x) and (currY == y):   # print * if they are in this square
-                print("* ", end="")
+            #if (currX == x) and (currY == y):   # print * if they are in this square
+                #print("* ", end="")
             if Map[y][x]==NUMBER and currX== x and currY == y:
                 if CurrCount==1: #I was kind of stuck here so I looked this part up
                     if not num1 in found_numbers: #I kind of learned how to use the not parameter and how to use the not in. the not is kind of similar to the "!="
@@ -128,27 +128,27 @@ def drawMap(currX, currY):
             #if (currX == 16) and (currY == 9) and MineStatus==False:
                 #win()
                 
-            else:
-                    if Map[y][x] == 0:
-                        print("  ", end="")
-                    elif Map[y][x] == WALL:
-                        print("▧", end=" ")
-                    elif Map[y][x] == SECRET:
-                        print("▧", end=" ")
-                    elif Map[y][x] == TERMINAL:
-                        print("?", end=" ")
-                    elif Map[y][x] == 2:
-                        print("x", end=" ")
-                    elif Map[y][x] == -1:
-                        print("  ", end="")
-                    elif Map[y][x] == DOOR:
-                        print("𓉞", end=" ")
-                    elif Map[y][x] == KEYCARD:
-                        print(" ", end=" ")
-                    elif Map[y][x] == NUMBER:
-                        print(" ", end=" ")
-        print()
-    print()
+            #else:
+                    #if Map[y][x] == 0:
+                        #print("  ", end="")
+                    #elif Map[y][x] == WALL:
+                       # print("▧", end=" ")
+                   # elif Map[y][x] == SECRET:
+                        #print("▧", end=" ")
+                    #elif Map[y][x] == TERMINAL:
+                       # print("?", end=" ")
+                   # elif Map[y][x] == 2:
+                      #  print("x", end=" ")
+                    #elif Map[y][x] == -1:
+                     #   print("  ", end="")
+                    #elif Map[y][x] == DOOR:
+                     #   print("𓉞", end=" ")
+                    #elif Map[y][x] == KEYCARD:
+                     #   print(" ", end=" ")
+                   # elif Map[y][x] == NUMBER:
+                       # print(" ", end=" ")
+        #print()
+   # print()
 
 def DisMines():
     global Map
@@ -162,7 +162,9 @@ def invert_directions(currX, currY):  # Added an invert directions function for 
     print("You feel weird after eating the potato, almost as if everything is uʍop ǝpᴉsdn???")
 def welcomeMsg():
     name=input("Hello, Traveler. Please enter your name: ")
-    print("Hello, ", name, "\n Beware. this dungeon has mines in it that will all explode in 5 minutes, burying you inside of this dungeon, but dont fret, \n a mine deactivator is somewhere here \n find all 5 numbers around the map to deactivate the mines and win.")
+    print("Hello, ", name, "\n Beware. this dungeon has mines in it that will all explode in 5 minutes, burying you inside of this dungeon, but dont fret, \n there is a way to deactivate the mines \n find all 5 numbers around the map to deactivate the mines and escape through the red door.")
+    print()
+    print(" ## Orange = you \n the player \n ## Purple = the mine terminal \n don't even touch it until you get all the numbers \n ## Gray = the minefield \n Don't come close to it until you disable the mines \n ## Green = Keycard \n use it to open the final door \n ## Red = Exit")
 #Define our function that will move the player
 #The function will first check if the player can move or hits a wall
 #If the player can move, then the current location will be updated
@@ -191,7 +193,7 @@ def movePlayer(x,y,moveDir):
 
     if moveDir == "d":
         if Map[y][x+1] <= 0 or Map[y][x+1] == 5:
-            #print ("valid right move")
+           #print ("valid right move")
             return (x+1, y)
         
     #they attempted a bad move
@@ -203,7 +205,7 @@ def terminal():
     global MineStatus, InteractionComplete, M
     InteractionComplete=False #making a flag so player doesn't get stuck at the terminal forever
     MineStatus=True #change logic because mines will activate every time you enter terminal
-    print (num1, num2, num3, num4, num5)
+    #print (num1, num2, num3, num4, num5)
     code=int(input("TERMINAL3847: greetings, AGENT. Please enter 5-digit access code: "))
     if code==(num1*10000)+(num2*1000)+(num3*100)+(num4*10)+(num5) and InteractionComplete==False: #make random num for code
         MinePrompt=input("[disable mines? (y/n)")
@@ -272,7 +274,7 @@ def drawTurtleMap(currX, currY):
     for row in range (0, len(Map)):  # Loop through each row in the map
         for cell in range (0, len(Map[row])):  # Loop through each cell in the row
             if (currX == cell) and (currY == row):   # print * if they are in this square
-                print ("square", currX, currY)
+                #print ("square", currX, currY)
                 drawer.color("orange")
             elif Map[row][cell]== WALL:
                 drawer.color("black")
@@ -332,27 +334,52 @@ MineStatus=True
 InteractionComplete=False
 Toggle=False
 #draw the map the first time before asking for a move
-#welcomeMsg()
+welcomeMsg()
 drawMap(currX, currY)
 #Forever just let the player move around the map on the path
 drawTurtleMap(currX, currY) 
+
+### KEYBOARD BINDINGS ###
+def key_up():
+    global currX, currY
+    currX, currY = movePlayer(currX, currY, "w")
+
+def key_down():
+    global currX, currY
+    currX, currY = movePlayer(currX, currY, "s")
+
+def key_left():
+    global currX, currY
+    currX, currY = movePlayer(currX, currY, "a")
+
+def key_right():
+    global currX, currY
+    currX, currY = movePlayer(currX, currY, "d")
+
+screen.listen()
+screen.onkey(key_up, "w")
+screen.onkey(key_down, "s")
+screen.onkey(key_left, "a")
+screen.onkey(key_right, "d")
+### MAIN LOOP ###
+
 while True:
-    print ("value of mines is", M)
-    moveDir = input("Enter direction (w, a, s, d): ")
-    if inverted_turns > 0:  # Made a a statement that inverts the players turns while the potato effect is active
-        if moveDir == "w":
-            moveDir = "s"
-        elif moveDir == "s":
-            moveDir = "w"
-        elif moveDir == "a":
-            moveDir = "d"
-        elif moveDir == "d":
-            moveDir = "a"
-        inverted_turns -= 1
-    currX, currY = movePlayer(currX, currY, moveDir)
+    #print ("value of mines is", M)
+    #moveDir = input("Enter direction (w, a, s, d): ")
+    #if inverted_turns > 0:  # Made a a statement that inverts the players turns while the potato effect is active
+        #if moveDir == "w":
+            #moveDir = "s"
+        #elif moveDir == "s":
+            #moveDir = "w"
+       # elif moveDir == "a":
+            #moveDir = "d"
+       # elif moveDir == "d":
+       #     moveDir = "a"
+       # inverted_turns -= 1 
+    #currX, currY = movePlayer(currX, currY, moveDir)
     drawMap(currX, currY)
     drawTurtleMap(currX, currY) 
-    screen.update
-#test
+    screen.update()
+
 
         
