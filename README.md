@@ -12,6 +12,8 @@
 
 You are stuck in an old dungeon that is ridded with mines that will all explode in 5 minutes. 
 
+Use W, A, S, D to move around the map.
+
 To escape: 
 
 * Find 5 numbers hidden accross the dungeon
